@@ -1,0 +1,8 @@
+com/mycompany/dkatalis/atm/models/AuthTest.class
+com/mycompany/dkatalis/atm/validators/TransferValidatorTest.class
+com/mycompany/dkatalis/atm/models/WithdrawTransactionTest.class
+com/mycompany/dkatalis/atm/validators/WithdrawValidatorTest.class
+com/mycompany/dkatalis/atm/models/DepositTransactionTest.class
+com/mycompany/dkatalis/atm/validators/DepositValidatorTest.class
+com/mycompany/dkatalis/atm/models/TransferTransactionTest.class
+com/mycompany/dkatalis/atm/validators/LoginValidatorTest.class
