@@ -38,6 +38,7 @@ public class Auth {
         Auth.loggedIn = Defaults.DEFAULT_BOOLEAN;
     }
 
+    // Adding a customer to existing static reference of lists.
     public static void setMember(String account) {
         String normalizeAccount = account.toLowerCase();
         Customer newCustomer = new Customer(
@@ -45,7 +46,8 @@ public class Auth {
                 Defaults.DEFAULT_DOUBLE,
                 Type.Transaction.INITIAL
         );
-
+        
+        // Map data that hold list of customer's data.
         Auth.customer.put(normalizeAccount, newCustomer);
     }
     

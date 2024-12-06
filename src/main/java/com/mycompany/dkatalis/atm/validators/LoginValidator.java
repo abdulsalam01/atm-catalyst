@@ -15,7 +15,9 @@ public class LoginValidator extends Validator {
 
     @Override
     public boolean validate(String[] parts, Transaction transaction) {
-        if (!Auth.isLoggedIn()) return false;
+        if (!Auth.isLoggedIn()) {
+            return false;
+        }
         
         return super.validate(parts, transaction);
     }    

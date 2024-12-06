@@ -15,6 +15,10 @@ public class DepositValidator extends Validator {
 
     @Override
     public boolean validate(String[] parts, Transaction transaction) {
+        // Validate if the type is `DEPOSIT`.
+        // Validate input length, should be 2.
+        // Validate input of second parameters, should be number.
+        // Validate input of second parameters, should be greater than 0.
         if (parts[0].equals(Type.Transaction.DEPOSIT.name().toLowerCase())) {
             if (parts.length != 2 || !parts[1].matches("\\d+")) {
                 System.out.println("Usage: deposit [amount]");

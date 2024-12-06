@@ -18,6 +18,7 @@ public class WithdrawTransaction extends Transaction {
         double balance = syncBalance(amount, transactionType);
 
         syncHistory(transactionType, amount, balance);
+        
         return balance;
     }
 

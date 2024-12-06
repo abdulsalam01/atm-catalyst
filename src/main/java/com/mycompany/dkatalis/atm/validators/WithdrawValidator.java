@@ -14,6 +14,10 @@ import com.mycompany.dkatalis.atm.constants.Type;
 public class WithdrawValidator extends Validator {
     @Override
     public boolean validate(String[] parts, Transaction transaction) {
+        // Validate if the type is `WITHDRAW`.
+        // Validate input length, should be 2.
+        // Validate input of second parameters, should be number.
+        // Validate input of second parameters, should be less than current balance.
         if (parts[0].equals(Type.Transaction.WITHDRAW.name().toLowerCase())) {
             if (parts.length != 2 || !parts[1].matches("\\d+")) {
                 System.out.println("Usage: withdraw [amount]");

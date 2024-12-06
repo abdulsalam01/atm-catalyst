@@ -16,10 +16,11 @@ import java.util.Map;
  * @author abdulsalam
  */
 public abstract class Transaction {
-
-    protected static final Map<String, Customer> listCustomerTransaction = new HashMap<>();
+    // Hold list of customer's transaction and its histories.
+    protected static final Map<String, Customer> listTransaction = new HashMap<>();
     protected static final Map<String, List<HistoryTransaction>> listHistory = new HashMap<>();
 
+    // Base method to be implemented by own type of its implementor.
     public abstract double transaction(double amount, String... target) throws Exception;
 
     public String getHistory() {
@@ -31,7 +32,7 @@ public abstract class Transaction {
             return Defaults.DEFAULT_STRING;
         }
         for (HistoryTransaction history : histories) {
-            listHistories.append(history);
+            listHistories.append(history); // Append more fast than manual concat.
             listHistories.append("\n");
         }
 
@@ -40,33 +41,35 @@ public abstract class Transaction {
 
     public double getCurrentBalance() {
         String key = Auth.getCurrentAccount();
-        Customer customer = Transaction.listCustomerTransaction.get(key);
+        Customer customer = Transaction.listTransaction.get(key);
         
         return customer == null ? Defaults.DEFAULT_DOUBLE : customer.getBalance();
     }
 
     protected double syncBalance(double amount, Type.Transaction type, String... acc) throws Exception {
+        // Determine the account that needed to be use.
+        // Use from given input, if not empty.
+        // Else, use default authenticated user.
         String key = acc.length == Defaults.DEFAULT_INT
                 ? Auth.getCurrentAccount()
                 : acc[0];
 
         double currentBalance = 0;
-        Customer customer = Transaction.listCustomerTransaction.get(key);
+        Customer customer = Transaction.listTransaction.get(key);
         if (customer != null) {
             currentBalance = customer.getBalance();
         } else {
-            Auth.setMember(key);
+            Auth.setMember(key); // Add to list of customer's data, register new.
         }
 
         double balance = Type.getCalculation(amount, currentBalance, type);
-        if (balance < 1) {
-            return balance;
-        }
-
         return balance;
     }
 
     protected void syncHistory(Type.Transaction type, double amount, double balance, String... acc) {
+        // Determine the account that needed to be use.
+        // Use from given input, if not empty.
+        // Else, use default authenticated user.
         String key = acc.length == Defaults.DEFAULT_INT
                 ? Auth.getCurrentAccount()
                 : acc[0];
@@ -84,19 +87,7 @@ public abstract class Transaction {
         );
         currHistory.add(history);
 
-        Transaction.listCustomerTransaction.put(key, new Customer(key, balance, type));
+        Transaction.listTransaction.put(key, new Customer(key, balance, type));
         Transaction.listHistory.put(key, currHistory);
-    }
-
-    private String preformatHistory(Type.Transaction type, double amount, double balance, String... acc) {
-        String key = acc.length == Defaults.DEFAULT_INT
-                ? Auth.getCurrentAccount()
-                : acc[0];        
-        String history = String.format("%s %s %f", key, type.name(), amount);
-        if (type == Type.Transaction.TRANSFER) {
-            history = String.format("%s to %s", history, acc[0]);
-        }
-        
-        return history;
     }
 }

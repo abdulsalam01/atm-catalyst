@@ -41,6 +41,15 @@ public class HistoryTransaction {
         this.timestamps = timestamps;
     }
 
+    /**
+     * Format the history of transaction in corresponding predefined skeleton of string.
+     * @param account
+     * @param type
+     * @param amount
+     * @param balance
+     * @param acc
+     * @return Formatted String
+     */
     public String preformatHistory(String account, Type.Transaction type, double amount, double balance, String... acc) {
         String key = acc.length == Defaults.DEFAULT_INT ? account : acc[0];
         String formattedHistory = String.format("%s %s %f", key, type.name(), amount);
